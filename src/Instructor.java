@@ -15,4 +15,9 @@ public class Instructor extends modelo.Usuario {
     public String getRol() {
         return "INSTRUCTOR";
     }
+
+    @Override
+    public String descripcionRol() {
+        return "Instructor: administra secciones asignadas y registra calificaciones.";
+    }
 }

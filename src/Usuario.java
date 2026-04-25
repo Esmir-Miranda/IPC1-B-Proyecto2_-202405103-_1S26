@@ -29,4 +29,8 @@ public abstract class Usuario implements Serializable {
     public void setPassword(String password) { this.password = password; }
 
     public abstract String getRol();
+
+    public String descripcionRol() {
+        return "Usuario del sistema con rol: " + getRol();
+    }
 }

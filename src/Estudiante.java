@@ -15,4 +15,9 @@ public class Estudiante extends modelo.Usuario {
     public String getRol() {
         return "ESTUDIANTE";
     }
+
+    @Override
+    public String descripcionRol() {
+        return "Estudiante: se inscribe en secciones y consulta sus calificaciones.";
+    }
 }

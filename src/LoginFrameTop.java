@@ -3,95 +3,68 @@ package vista;
 import controlador.AppController;
 import modelo.Usuario;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.JButton;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 
 public class LoginFrameTop extends JFrame {
-    private final AppController controller;
+    private AppController controller;
     private JTextField txtCodigo;
     private JPasswordField txtPassword;
 
     public LoginFrameTop(AppController controller) {
         this.controller = controller;
         setTitle("Sancarlista Academy");
-        setSize(900, 520);
+        setSize(880, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new GridLayout(1, 2));
 
-        JPanel leftPanel = new JPanel(new BorderLayout());
-        leftPanel.setBackground(UIStyle.BG);
-        leftPanel.setBorder(new EmptyBorder(40, 40, 40, 40));
+        JPanel left = new JPanel(new BorderLayout());
+        left.setBackground(vista.UIStyle.BG);
+        left.setBorder(new EmptyBorder(45, 45, 45, 45));
+        JLabel titulo = vista.UIStyle.title("Sancarlista Academy");
+        JLabel desc = new JLabel("<html>Sistema académico desarrollado en Java con MVC, POO, arreglos, serialización, JTable, reportes y bitácora.</html>");
+        desc.setForeground(vista.UIStyle.SOFT);
+        desc.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        JPanel box = new JPanel();
+        box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
+        box.setBackground(vista.UIStyle.BG);
+        box.add(titulo);
+        box.add(Box.createVerticalStrut(15));
+        box.add(desc);
+        left.add(box, BorderLayout.CENTER);
 
-        JLabel lblBrand = UIStyle.createTitle("Sancarlista Academy");
-        JLabel lblDesc = new JLabel("<html>Plataforma académica moderna para gestionar cursos, instructores y estudiantes.</html>");
-        lblDesc.setFont(UIStyle.normalFont());
-        lblDesc.setForeground(UIStyle.TEXT_SOFT);
+        JPanel right = new JPanel(new GridBagLayout());
+        right.setBackground(Color.WHITE);
+        JPanel card = new JPanel();
+        card.setPreferredSize(new Dimension(340, 300));
+        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+        card.setBorder(new EmptyBorder(25, 25, 25, 25));
+        JLabel login = new JLabel("Iniciar sesión");
+        login.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        txtCodigo = vista.UIStyle.field();
+        txtPassword = vista.UIStyle.password();
+        JButton btn = vista.UIStyle.button("Entrar al sistema");
+        btn.addActionListener(e -> login());
+        card.add(login);
+        card.add(Box.createVerticalStrut(18));
+        card.add(new JLabel("Código"));
+        card.add(txtCodigo);
+        card.add(Box.createVerticalStrut(12));
+        card.add(new JLabel("Contraseña"));
+        card.add(txtPassword);
+        card.add(Box.createVerticalStrut(22));
+        card.add(btn);
+        right.add(card);
 
-        JPanel brandBox = new JPanel();
-        brandBox.setBackground(UIStyle.BG);
-        brandBox.setLayout(new BoxLayout(brandBox, BoxLayout.Y_AXIS));
-        brandBox.add(lblBrand);
-        brandBox.add(Box.createVerticalStrut(15));
-        brandBox.add(lblDesc);
-        leftPanel.add(brandBox, BorderLayout.CENTER);
-
-        JPanel rightPanel = new JPanel(new GridBagLayout());
-        rightPanel.setBackground(new Color(248, 250, 252));
-
-        JPanel loginCard = new JPanel();
-        loginCard.setPreferredSize(new Dimension(340, 320));
-        loginCard.setLayout(new BoxLayout(loginCard, BoxLayout.Y_AXIS));
-        loginCard.setBackground(Color.WHITE);
-        loginCard.setBorder(new EmptyBorder(25, 25, 25, 25));
-
-        JLabel lblLogin = new JLabel("Iniciar sesión");
-        lblLogin.setFont(UIStyle.titleFont());
-        lblLogin.setForeground(UIStyle.BG);
-        txtCodigo = UIStyle.createTextField();
-        txtPassword = UIStyle.createPasswordField();
-        JButton btnLogin = UIStyle.createButton("Entrar al sistema");
-        btnLogin.addActionListener(e -> iniciarSesion());
-
-        loginCard.add(lblLogin);
-        loginCard.add(Box.createVerticalStrut(20));
-        loginCard.add(new JLabel("Código"));
-        loginCard.add(Box.createVerticalStrut(5));
-        loginCard.add(txtCodigo);
-        loginCard.add(Box.createVerticalStrut(15));
-        loginCard.add(new JLabel("Contraseña"));
-        loginCard.add(Box.createVerticalStrut(5));
-        loginCard.add(txtPassword);
-        loginCard.add(Box.createVerticalStrut(25));
-        loginCard.add(btnLogin);
-        rightPanel.add(loginCard);
-
-        add(leftPanel);
-        add(rightPanel);
+        add(left);
+        add(right);
         setVisible(true);
     }
 
-    private void iniciarSesion() {
-        String codigo = txtCodigo.getText().trim();
-        String pass = new String(txtPassword.getPassword());
-        if (codigo.isEmpty() || pass.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Completa todos los campos.");
-            return;
-        }
-        Usuario usuario = controller.login(codigo, pass);
+    private void login() {
+        Usuario usuario = controller.login(txtCodigo.getText().trim(), new String(txtPassword.getPassword()));
         if (usuario == null) {
             JOptionPane.showMessageDialog(this, "Credenciales inválidas.");
             return;

@@ -9,4 +9,9 @@ public class Administrador extends modelo.Usuario {
     public String getRol() {
         return "ADMINISTRADOR";
     }
+
+    @Override
+    public String descripcionRol() {
+        return "Administrador: gestiona instructores, estudiantes, cursos y secciones.";
+    }
 }
