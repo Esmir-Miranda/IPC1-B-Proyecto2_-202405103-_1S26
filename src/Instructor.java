@@ -1,6 +1,6 @@
 package modelo;
 
-public class Instructor extends Usuario {
+public class Instructor extends modelo.Usuario {
     private int seccionesAsignadas;
 
     public Instructor(String codigo, String nombre, String fechaNacimiento, String genero, String password) {
@@ -8,13 +8,8 @@ public class Instructor extends Usuario {
         this.seccionesAsignadas = 0;
     }
 
-    public int getSeccionesAsignadas() {
-        return seccionesAsignadas;
-    }
-
-    public void setSeccionesAsignadas(int seccionesAsignadas) {
-        this.seccionesAsignadas = seccionesAsignadas;
-    }
+    public int getSeccionesAsignadas() { return seccionesAsignadas; }
+    public void setSeccionesAsignadas(int seccionesAsignadas) { this.seccionesAsignadas = seccionesAsignadas; }
 
     @Override
     public String getRol() {
